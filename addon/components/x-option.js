@@ -13,7 +13,7 @@ var isArray = Ember.isArray;
  */
 export default Ember.Component.extend({
   tagName: 'option',
-  attributeBindings: ['selected', 'name', 'disabled', 'value'],
+  attributeBindings: ['selected', 'name', 'disabled', 'value', 'autofocus', 'form', 'required', 'size'],
   classNameBindings: [':x-option'],
 
   /**
@@ -31,6 +31,8 @@ export default Ember.Component.extend({
    * Property bound to the `selected` attribute of the native
    * `<option>` element. It is aware of the containing `x-select`'s
    * value and will mark itself if it is the same.
+   * Test for equality is loosened somewhat, as it doesn't matter so
+   * "2" tests equal to 2.
    *
    * @private
    * @property selected
@@ -40,7 +42,7 @@ export default Ember.Component.extend({
     if (this.get('select.multiple') && isArray(this.get('select.value'))) {
       return this.get('select.value').contains(this.get('value'));
     } else {
-      return this.get('value') === this.get('select.value');
+      return this.get('value') == this.get('select.value');  // jshint ignore:line
     }
   }),
 
